@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour
     private Rigidbody enemyRb;
     private GameObject player;
 
+    //Color32 objColor;
+    Color32 newColor;
+
     void Start()
     {
         enemyRb = gameObject.GetComponent<Rigidbody>();
@@ -39,6 +42,7 @@ public class Enemy : MonoBehaviour
             Debug.Log("Collided with Player: " + collision.gameObject.name);
             numLives--;
             Debug.Log("Number of Lives: " + numLives);
+            EnemyAction();
         }
         else
         {
@@ -49,6 +53,10 @@ public class Enemy : MonoBehaviour
     //Do something once it collided
     virtual protected void EnemyAction()
     {
-
+        //GetComponent<Renderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        //objColor = gameObject.GetComponent<MeshRenderer>().material.color;
+        //Debug.Log("Enemy Color: " + objColor);
+        newColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        gameObject.GetComponent<MeshRenderer>().material.color = newColor;
     }
 }
