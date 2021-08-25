@@ -5,7 +5,6 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed = 3;
-    public int numLives = 3;
 
     private Rigidbody enemyRb;
     private GameObject player;
@@ -32,13 +31,11 @@ public class Enemy : MonoBehaviour
 
     //Figure out if object collided with something
 
-    virtual protected void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Character"))
         {
             Debug.Log("Collided with Player: " + collision.gameObject.name);
-            numLives--;
-            Debug.Log("Number of Lives: " + numLives);
         }
         else
         {
