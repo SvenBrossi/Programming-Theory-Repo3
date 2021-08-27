@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public float speed = 3;
     public int numLives = 3;
+    public float searchRange = 5.0f;
 
     private Rigidbody enemyRb;
     private GameObject player;
@@ -25,37 +26,54 @@ public class Enemy : MonoBehaviour
         MoveEnemy();
     }
 
-    //Move logic
+    //Enemy Move logic
     virtual protected void MoveEnemy()
     {
         Vector3 target = (player.transform.position - transform.position).normalized;
-        enemyRb.AddForce(target * speed);
+
+        if (TargetInRange(searchRange, player.transform.position, transform.position))
+        {
+            enemyRb.AddForce(target * speed);
+        }
     }
 
+    public bool TargetInRange(float range, Vector3 pos1, Vector3 pos2)
+    {
+        bool targetInRange = false;
+
+        float dist1 = DetermineDistance(pos1.x, pos2.x);
+        float dist2 = DetermineDistance(pos1.z, pos2.z);
+
+        if (dist1 < range && dist2 < range)
+        {
+            targetInRange = true;
+        }
+
+        return targetInRange;
+    }
+
+    public float DetermineDistance(float point1, float point2)
+    {
+        float distance = Mathf.Abs(point1 - point2);
+        return distance;
+    }
 
     //Figure out if object collided with something
-
     virtual protected void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Collided with Player: " + collision.gameObject.name);
-            numLives--;
-            Debug.Log("Number of Lives: " + numLives);
-            EnemyAction();
-        }
-        else
-        {
-            Debug.Log("Collided with object: " + collision.gameObject.name);
+            //Reduce players life
+            //numLives--;
+
+            // Actions the enemy performs when touching the player
+            ChangeColor();
         }
     }
 
     //Do something once it collided
-    virtual protected void EnemyAction()
+    virtual protected void ChangeColor()
     {
-        //GetComponent<Renderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-        //objColor = gameObject.GetComponent<MeshRenderer>().material.color;
-        //Debug.Log("Enemy Color: " + objColor);
         newColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
         gameObject.GetComponent<MeshRenderer>().material.color = newColor;
     }
