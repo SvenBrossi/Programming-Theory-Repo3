@@ -15,7 +15,7 @@ public class PersonController : MonoBehaviour
     private bool groundedPlayer;
     private float gravityValue = -9.81f;
 
-    private int numLives = 3;
+    public int numLifes;
 
     private void Start()
     {
@@ -63,12 +63,5 @@ public class PersonController : MonoBehaviour
         playerVelocity.y += gravityValue * Time.deltaTime;
 
         m_Controller.Move(playerVelocity * Time.deltaTime);
-
-        Debug.Log("Number of Lifes: " + numLives);
-    }
-
-    public void UpdateLives(int livesChange)
-    {
-        numLives += livesChange;
     }
 }

@@ -5,14 +5,14 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed = 3;
-    public int numLives = 3;
+    //public int numLives = 3;
     public float searchRange = 5.0f;
 
     private Rigidbody enemyRb;
     private GameObject player;
 
     //Color32 objColor;
-    Color32 newColor;
+    //Color32 newColor;
 
     void Start()
     {
@@ -65,6 +65,7 @@ public class Enemy : MonoBehaviour
         {
             //Reduce players life
             //numLives--;
+            player.GetComponent<PersonController>().UpdateLives(-1);
 
             // Actions the enemy performs when touching the player
             ChangeColor();
@@ -74,7 +75,7 @@ public class Enemy : MonoBehaviour
     //Do something once it collided
     virtual protected void ChangeColor()
     {
-        newColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        Color32 newColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
         gameObject.GetComponent<MeshRenderer>().material.color = newColor;
     }
 }
