@@ -11,6 +11,13 @@ public class Enemy : MonoBehaviour
     private Rigidbody enemyRb;
     private GameObject player;
 
+    //[Header("Enemy Guarding Perimeter")]
+    //[Tooltip("Enter Vector3 type of Position")]
+    //public Vector3 startPosition;
+    //public Vector3 endPosition;
+
+    protected bool flipPos = false;
+
     //Color32 objColor;
     //Color32 newColor;
 
@@ -18,6 +25,7 @@ public class Enemy : MonoBehaviour
     {
         enemyRb = gameObject.GetComponent<Rigidbody>();
         player = GameObject.Find("Character");
+
     }
 
 
@@ -36,6 +44,23 @@ public class Enemy : MonoBehaviour
             enemyRb.AddForce(target * speed);
         }
     }
+
+    virtual protected void MoveEnemy(Vector3 originPos, Vector3 targetPos)
+    {
+        if (this.transform.position != targetPos)
+        {
+            transform.LookAt(targetPos);
+            flipPos = false;
+        }
+
+        transform.position = Vector3.MoveTowards(this.transform.position, targetPos, speed * Time.deltaTime);
+
+        if (this.transform.position == targetPos)
+        {
+            flipPos = true;
+        }
+    }
+
 
     public bool TargetInRange(float range, Vector3 pos1, Vector3 pos2)
     {

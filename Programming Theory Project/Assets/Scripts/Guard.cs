@@ -1,0 +1,88 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Guard : Enemy
+{
+    //private Rigidbody enemyRb;
+    private GameObject player;
+
+    [Header("Enemy Guarding Perimeter")]
+    [Tooltip("Enter Vector3 type of Position")]
+    public string direction = "up";
+
+    private Vector3 startPosition;
+    private Vector3 endPosition;
+
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        player = GameObject.Find("Character");
+
+        startPosition = this.transform.position;
+        ComputeEndPosition();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        MoveEnemyBackAndForth();
+    }
+
+    void MoveEnemyBackAndForth()
+    {
+        if (flipPos)
+        {
+            if (this.transform.position == startPosition)
+            {
+                ComputeEndPosition();
+            }
+            else
+            {
+                endPosition = startPosition;
+            }
+        }
+
+        MoveEnemy(startPosition, endPosition);
+    }
+
+    //Figure out if object collided with something
+    override protected void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            //Reduce players life
+            //numLives--;
+            player.GetComponent<PersonController>().UpdateLives(-1);
+
+            // Actions the enemy performs when touching the player
+            ChangeColor();
+        }
+    }
+
+    protected void ComputeEndPosition()
+    {
+
+        endPosition = startPosition;
+
+        if (direction == "up")
+        {
+            endPosition.z += 10.0f;
+        }
+        else if (direction == "down")
+        {
+            endPosition.z -= 10.0f;
+        }
+        else if (direction == "right")
+        {
+            endPosition.x += 10.0f;
+        }
+        else
+        {
+            endPosition.x -= 10.0f;
+        }
+    }
+
+}
