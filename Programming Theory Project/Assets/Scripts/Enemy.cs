@@ -4,30 +4,20 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed = 3;
-    //public int numLives = 3;
-    public float searchRange = 5.0f;
+    [Header("Enemy Base Settings")]
+    protected float speed = 3;
+    protected float searchRange = 5.0f;
 
     private Rigidbody enemyRb;
     private GameObject player;
 
-    //[Header("Enemy Guarding Perimeter")]
-    //[Tooltip("Enter Vector3 type of Position")]
-    //public Vector3 startPosition;
-    //public Vector3 endPosition;
-
     protected bool flipPos = false;
-
-    //Color32 objColor;
-    //Color32 newColor;
 
     void Start()
     {
         enemyRb = gameObject.GetComponent<Rigidbody>();
         player = GameObject.Find("Character");
-
     }
-
 
     void Update()
     {
@@ -62,7 +52,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public bool TargetInRange(float range, Vector3 pos1, Vector3 pos2)
+    protected bool TargetInRange(float range, Vector3 pos1, Vector3 pos2)
     {
         bool targetInRange = false;
 
@@ -77,7 +67,7 @@ public class Enemy : MonoBehaviour
         return targetInRange;
     }
 
-    public float DetermineDistance(float point1, float point2)
+    protected float DetermineDistance(float point1, float point2)
     {
         float distance = Mathf.Abs(point1 - point2);
         return distance;
