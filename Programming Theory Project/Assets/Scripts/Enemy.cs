@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    //ENCAPSULATION
     [Header("Enemy Base Settings")]
-    protected float speed = 3;
-    protected float searchRange = 5.0f;
+    [SerializeField] protected float speed = 3;
+    [SerializeField] protected float searchRange = 5.0f;
 
     private Rigidbody enemyRb;
     private GameObject player;
@@ -24,7 +25,7 @@ public class Enemy : MonoBehaviour
         MoveEnemy();
     }
 
-    //Enemy Move logic
+    //POLYMORPHISM
     virtual protected void MoveEnemy()
     {
         Vector3 target = (player.transform.position - transform.position).normalized;
@@ -35,6 +36,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //POLYMORPHISM
     virtual protected void MoveEnemy(Vector3 originPos, Vector3 targetPos)
     {
         if (this.transform.position != targetPos)
@@ -51,7 +53,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
+    //ABSTRACTION
     protected bool TargetInRange(float range, Vector3 pos1, Vector3 pos2)
     {
         bool targetInRange = false;
@@ -67,6 +69,7 @@ public class Enemy : MonoBehaviour
         return targetInRange;
     }
 
+    //ABSTRACTION
     protected float DetermineDistance(float point1, float point2)
     {
         float distance = Mathf.Abs(point1 - point2);
@@ -88,6 +91,7 @@ public class Enemy : MonoBehaviour
     }
 
     //Do something once it collided
+    //ABSTRACTION
     virtual protected void ChangeColor()
     {
         Color32 newColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);

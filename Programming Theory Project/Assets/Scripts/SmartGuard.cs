@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//INHERITANCE
 public class SmartGuard : Enemy
 {
     //private Rigidbody enemyRb;
@@ -43,6 +44,7 @@ public class SmartGuard : Enemy
             }
         }
 
+        //INHERITANCE
         if (TargetInRange(searchRange, player.transform.position, transform.position))
         {
             Vector3 target = (player.transform.position - transform.position).normalized;
@@ -50,6 +52,7 @@ public class SmartGuard : Enemy
         }
         else
         {
+            //INHERITANCE
             MoveEnemy(startPosition, endPosition);
         }
     }

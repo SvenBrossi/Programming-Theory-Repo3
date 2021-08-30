@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//INHERITANCE
 public class Guard : Enemy
 {
     //private Rigidbody enemyRb;
@@ -46,6 +47,7 @@ public class Guard : Enemy
             }
         }
 
+        //INHERITANCE
         MoveEnemy(startPosition, endPosition);
     }
 
