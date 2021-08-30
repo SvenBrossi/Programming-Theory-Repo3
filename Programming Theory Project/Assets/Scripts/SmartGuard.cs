@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guard : Enemy
+public class SmartGuard : Enemy
 {
     //private Rigidbody enemyRb;
     private GameObject player;
-
 
     [Header("Guard Settings")]
     [Tooltip("Enter 'left', 'right', 'up' or 'down' as parameters.")]
@@ -14,8 +13,6 @@ public class Guard : Enemy
 
     private Vector3 startPosition;
     private Vector3 endPosition;
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -46,7 +43,15 @@ public class Guard : Enemy
             }
         }
 
-        MoveEnemy(startPosition, endPosition);
+        if (TargetInRange(searchRange, player.transform.position, transform.position))
+        {
+            Vector3 target = (player.transform.position - transform.position).normalized;
+            this.GetComponent<Rigidbody>().AddForce(target * speed);
+        }
+        else
+        {
+            MoveEnemy(startPosition, endPosition);
+        }
     }
 
     //Figure out if object collided with something
@@ -85,5 +90,5 @@ public class Guard : Enemy
             endPosition.x -= 10.0f;
         }
     }
-
 }
+
